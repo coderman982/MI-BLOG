@@ -2,9 +2,7 @@ import React from 'react'
 
 const AddBlog = () => {
   return (
-    <div>
-      
-    </div>
+   <form className='flex-1'></form>
   )
 }
 

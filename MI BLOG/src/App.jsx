@@ -7,6 +7,7 @@ import Dashboard from './pages/admin/Dashboard'
 import AddBlog from './pages/admin/AddBlog'
 import ListBlog from './pages/admin/ListBlog'
 import Comments from './pages/admin/Comments'
+import Login from './pages/admin/Login'
 
 const App = () => {
   return (
@@ -14,7 +15,7 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/blog/:id' element={<Blog />} />
-        <Route path='/admin' element={<Layout />}>
+        <Route path='/admin' element={true?<Layout />:<Login />} >//
         
           <Route index element={<Dashboard />} />
           <Route path='addBlog' element={<AddBlog />} />
@@ -32,3 +33,5 @@ export default App
 //         <Route path='listBlog' element={<ListBlog />} />
 //         <Route path='comment' element={<Comment />} />
 //       </Routes> */} this is for nested routes in admin layout, you can uncomment it and create the corresponding components for dashboard, addBlog, listBlog and comment.
+//        <Route path='/admin' element={true?<Layout />:<Login />} >// if user is authenticated, render the Layout component, otherwise render the Login component.
+//  You can replace true with your actual authentication logic to control access to the admin panel.
