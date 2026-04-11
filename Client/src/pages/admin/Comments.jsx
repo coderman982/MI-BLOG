@@ -1,6 +1,20 @@
 import React from 'react'
+import CommentTableItem from '../../components/CommentTableItem';
+import { useState, useEffect } from 'react';
+import { comment_data } from '../../data/comment_data';
 
 const Comments = () => {
+const [comments, setComments] = useState([]);
+const [filter, setFilter] = useState('All');
+
+const fetchComments = async () => {
+setComments(comment_data);
+};
+
+useEffect(() => {
+fetchComments();
+}, []);
+
 
   return (
 <div className='flex-1 pt-5 px-5 sm: pt-12 sm: pl-16 bg-blue-50/50'>
@@ -30,7 +44,7 @@ ${filter === 'Not Approved' ? 'text-primary': 'text-gray-700' } `}>Not Approved<
   <tbody>
     {Comments.filter((comment)=>{if(filter === 'Approved') return comment.isApproved === true;
       return comment.isApproved === false
-    }).map((comment) => (
+    }).map((comment,index) => (
       <CommentTableItem key={comment._id} comment={comment} index={index+1} fetchComments={fetchComments} />
     ))}
   </tbody>

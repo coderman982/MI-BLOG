@@ -1,5 +1,7 @@
 import React from 'react'
 import BlogTableItem from '../../components/BlogTableItem';
+import { useState, useEffect } from 'react';
+import { blog_data } from '../../data/blog_data';
 
 const ListBlog = () => {
 
