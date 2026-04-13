@@ -21,7 +21,7 @@ const adminLogin = async(req,res) => {
  
 }
 
-export default adminController
+export default adminLogin
 
 //it allow user to login in application,first we get data from req body email password then verify it
 //if same then allow user to login
