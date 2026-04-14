@@ -65,3 +65,78 @@ export const addBlog=async(req,res)=>{
 
 //whenever we add new blog post from admin dashboard by req
 //now we create new api router for this
+
+//now we will create api route to get all blogs
+
+export const getAllBlogs=async(req,res)=>{
+
+    try {
+        
+        const blogs=await Blog.find({isPublished:true})//whenever is published property is true it will return all the
+        //it will return all blogpost and save it in blogs
+        res.json({success:true,blogs})
+
+    } catch (error) {
+
+        res.json({success:false, message:error.message})
+
+        
+
+    }
+
+
+}
+
+
+//to get individual blog data
+
+    export const getBlogById=async(req,res)=>{
+        try {
+            const {blogId}=req.params;//to get blog id from url parameter we use params
+            const blog=await Blog.findById()
+            if(!blog){
+                return res.json({success:false,message:"bolg not found"})
+            }
+            
+        } catch (error) {
+
+            res.json({success:false,message:error.message})
+            
+        }
+
+    }
+    
+    //to find and delte blog
+    export const deleteBlogById=async(req,res)=>{
+        try {
+            const {id}=req.body;
+            await Blog.findByIdAndDelete(id);
+            res.json({success:true,message :"blog deleted"})
+            
+        } catch (error) {
+
+            res.json({success:false,message:error.message})
+            
+        }
+
+    }
+
+    //to publish and unpublish a blog
+
+    export const tooglePublish=async(req,res)=>{
+        try {
+
+
+              const {id}=req.body;
+              const blog=await Blog.findById(id);
+              blog.isPublished=!blog.isPublished;
+              await blog.save();
+              res.json({success:true,message:"Blog status updated"})
+            
+        } catch (error) {
+             res.json({success:false,message:error.message})
+
+            
+        }
+    }
+
