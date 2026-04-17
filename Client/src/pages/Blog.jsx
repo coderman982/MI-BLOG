@@ -5,9 +5,13 @@ import Moment from 'moment'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Loader from '../components/Loader'
+import toast from 'react-hot-toast'
+import { set } from 'mongoose'
 
 const Blog = () => {
   const {id} = useParams()
+
+  const{axios}=useAppContext()//it will get axios from context and use it to make api calls to backend and get data from server and store it in state and provide it to all components of frontend  
 
   const [data,setData]=useState(null)
   const [comments,setComments]=useState([])
@@ -16,19 +20,51 @@ const Blog = () => {
   const[content,setContent]=useState([])
 
   const fetchBlogData= async()=>{
-    const data=blog_data.find(item=>item._id===id)
-    setData(data)
+    try {
+      const {data}=await axios.get(`/api/blog/${id}`)//it will make api call to backend and get data from server and store it in data
+         data.success ? setData(data) : toast.error(data.message) //if success it will store data in state and provide it to all components of frontend otherwise it will show error message
+    } catch (error) {
+
+      toast.error(error.message)//if there is error it will show error message;
+      
+    }
   }
 
   const fetchComments= async()=>{
 
-    setComments(comments_data)
+    try {
+      const  {data}=await axios.get(`/api/blog/comments`,{blogId :id})//it will make api call to backend and get data from server and store it in data
+      if(data.success){
+        setComments(data.comments)//if success it will store comments in state and provide it to all components of frontend
+      }
+      else{
+        toast.error(data.message)//if failed it will show error message
+      }
+    } catch (error) {
+      toast.error(error.message)
+    }
 
 
   }
 
   const addComment=async(e)=>{
     e.preventDefault();
+
+    try {
+            const  {data}=await axios.get(`/api/blog/add-comment`,{blog :id,name,content})//it will make api call to backend and get data from server and store it in data
+            if(data.success){
+              toast.success(data.message)//if success it will show success message
+              setName('')//it will clear name input field after successful submission
+              setContent('')//it will clear content input field after successful submission
+            }
+
+            else{
+              toast.error(data.message)//if failed it will show error message
+            }
+
+    } catch (error) {
+      toast.error(error.message)
+    }
   }
 
 

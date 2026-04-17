@@ -3,8 +3,13 @@ import { useState } from 'react'
 import assets from '../../assets'
 import Quill from 'quill'
 import { blogCategories } from '../../assets/assets'
+import toast from 'react-hot-toast'
 
 const AddBlog = () => {
+  const{axios}=useAppContext()//it will get axios from context and use it to make api calls to backend and get data from server and store it in state and provide it to all components of frontend
+  const [isAdding, setIsAdding] = useState(true);
+
+
 
   const editorRef = useRef(null);
   const quillRef = useRef(null);
@@ -18,7 +23,43 @@ const AddBlog = () => {
   const generateWithAI=async()=>{}
 
   const onSubmitHandler=async(e)=>{
-    e.preventDefault();
+    try {
+      e.preventDefault();
+      setIsAdding(true);
+
+      const blog={title,subTitle,
+        description:quillRef.current.root.innerHTML,
+      category,isPublished}
+
+      const formData=new FormData();
+
+      formData.append('blog',JSON.stringify(blog))
+      formData.append('image',image)
+
+      const {data}=await axios.post('/api/blog/add',formData)
+
+      if (data.success) {
+        toast.success(data.message)//if success it will show success message
+        setImage(false)
+        setTitle('')
+        setSubTitle('')
+        setCategory('Startup')
+        quillRef.current.root.innerHTML=''
+      }
+
+      else{
+        toast.error(data.message)//if failed it will show error message
+      }
+
+    } catch (error) {
+      toast.error(error.message)//if there is error it will show error message;
+      
+    }
+
+    finally{
+      setIsAdding(false);
+    }
+
   }
 
   useEffect(()=>{
@@ -72,7 +113,7 @@ const AddBlog = () => {
         </div>
 
 
-        <button type='submit' className='mt-8 w-40 h-10 bg-primary text-white rounded cursor-pointer text-sm'>Add Blog</button>
+        <button disabled={isAdding} type='submit' className='mt-8 w-40 h-10 bg-primary text-white rounded cursor-pointer text-sm'>{isAdding ? 'Adding...' : 'Add Blog'}</button>
 
 
 

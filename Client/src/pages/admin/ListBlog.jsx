@@ -6,7 +6,23 @@ import { blog_data } from '../../data/blog_data';
 const ListBlog = () => {
 
 const [blogs, setBlogs] = useState([]);
+
+const {axios}=useAppContext()//it will get axios from context and use it to make api calls to backend and get data from server and store it in state and provide it to all components of frontend
+
 const fetchBlogs = async () => {
+
+  try {
+    const {data}=await axios.get('/api/admin/blogs')//it will make api call to backend and get data from server and store it in data
+    if(data.success){
+      setBlogs(data.blogs)
+    }
+
+    else{
+      toast.error(data.message)//if failed it will show error message
+    }
+  } catch (error) {
+    toast.error(error.message)//if there is error it will show error message
+  }
 setBlogs (blog_data)
 }
 useEffect ((D)=>{

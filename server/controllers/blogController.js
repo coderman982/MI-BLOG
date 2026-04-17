@@ -2,6 +2,7 @@ import fs from 'fs'
 import imagekit from '../config/imagekit';
 import { format } from 'path';
 import Blog from '../models/Blog';
+import Comment from '../models/Comment';
 
 
 
@@ -111,6 +112,10 @@ export const getAllBlogs=async(req,res)=>{
         try {
             const {id}=req.body;
             await Blog.findByIdAndDelete(id);
+
+            //dete all comments with blogs also
+
+            await Comment.deleteMany({blog:id});//it will delete all comment with this blog id
             res.json({success:true,message :"blog deleted"})
             
         } catch (error) {
@@ -140,3 +145,26 @@ export const getAllBlogs=async(req,res)=>{
         }
     }
 
+    export const addComment=async(req,res)=>{
+        try {
+
+            const {blog ,name,content}=req.body;
+            await Comment.create({blog,name,content})
+            res.json({success:true,message:"comment added successfully"})            
+        } catch (error) {
+
+            res.json({success:false,message:error.message})
+            
+        }
+    }
+   
+
+    export const getBlogComments=async(req,res)=>{
+        try {
+            const {blogId}=req.body;
+            const comments=await Comment.find({blog:blogId,isApproved:true}).sort({createdAt:-1});
+            res.json({success:true,comments})
+        } catch (error) {
+            res.json({success:false,message:error.message})
+        }
+    }

@@ -11,6 +11,8 @@ blogRouter.get('/:blogId',getBlogById);
 blogRouter.post('/delete',deleteBlogById);
 blogRouter.post('/toggle-publish',auth,tooglePublish);
 
+blogRouter.post("/add-comment",addComment);
+blogRouter.post("/comments",getBlogComments);
 
 //upload.single('image') we will send image from front end it will parse it
 //and send to req.file then medaikit will upload the file
