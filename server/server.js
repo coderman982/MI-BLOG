@@ -3,26 +3,34 @@ import 'dotenv/config'
 import cors from 'cors'
 import connectDB from './config/db.js';
 import blogRouter from './routes/blogRoutes.js';
-import Blog from './models/Blog.js';
 import adminRouter from './routes/adminRoutes.js';
 
-const app=express();
+const app = express();
 
-await connectDB() //it await connectDb to complete
+let isConnected = false;
 
-//middlewares
-app.use(cors({origin:'*'}))//allow all origins for dev
-app.use(express.json())//all requests will be parsed in json method
+// Connect to DB lazily on first request (required for Vercel serverless)
+app.use(async (req, res, next) => {
+    if (!isConnected) {
+        await connectDB();
+        isConnected = true;
+    }
+    next();
+});
 
-//routes
-app.get('/', (req,res) => res.send("Sever is working"))
-app.use('/api/admin',adminRouter)
-app.use('/api/blog' ,blogRouter)//whenver someone go to api/blog it will go to blog router and execute all apis there and all function
+// Middlewares
+app.use(cors({ origin: '*' })); // allow all origins
+app.use(express.json()); // parse json bodies
 
-const PORT= process.env.PORT || 3000;//it means if 3000 port or port from .env file
+// Routes
+app.get('/', (req, res) => res.send('Server is working'));
+app.use('/api/admin', adminRouter);
+app.use('/api/blog', blogRouter);
 
-app.listen(PORT,()=>{
-    console.log("server is running")
-})
+// Start locally (Vercel ignores this — it uses the export below)
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
 
-//it will run port of 3000
+export default app;

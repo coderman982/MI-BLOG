@@ -1,6 +1,4 @@
-import fs from 'fs'
 import imagekit from '../config/imagekit.js';
-import { format } from 'path';
 import Blog from '../models/Blog.js';
 import Comment from '../models/Comment.js';
 import main from '../config/Gemini.js';
@@ -22,15 +20,11 @@ export const addBlog=async(req,res)=>{
             return res.json({success:false,message:"missing fields"})
         }
 
-        //we will upload image from cloud and to upload it use fs
-
-        const fileBuffer=fs.readFileSync(imageFile.path)
-
-        //upload image to imagekit then it will optimize then strore in mongo db
-        const response=await imagekit.upload({
-            file:fileBuffer,
-            fileName:imageFile.originalname,
-            folder:"/blogs"//optional it will arange all image in this folder in imagekit
+        // With memoryStorage, file content is in imageFile.buffer (no disk path)
+        const response = await imagekit.upload({
+            file: imageFile.buffer,
+            fileName: imageFile.originalname,
+            folder: "/blogs"
         })
 
         //optimization through imgekit url tranformation

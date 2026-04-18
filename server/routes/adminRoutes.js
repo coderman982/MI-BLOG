@@ -4,7 +4,6 @@
 import express from "express";
 import adminLogin from "../controllers/adminController.js";
 import auth from "../middleware/auth.js";
-import { get } from "mongoose";
 import { approveCommentById, deleteCommentById, getAllBlogsAdmin, getDashboard, gettAllComments } from "../controllers/adminController.js";
 
 const adminRouter=express.Router();
