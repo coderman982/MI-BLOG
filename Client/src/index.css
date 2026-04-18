@@ -98,6 +98,116 @@ body {
 .text-gray-400 { color: #6b7280 !important; }
 .text-gray-500 { color: #6b7280 !important; }
 
+/* Dark Mode Styles */
+.dark {
+  background: #0f172a !important;
+  color: #e2e8f0 !important;
+}
+
+.dark body {
+  background: #0f172a !important;
+}
+
+.dark .min-h-screen {
+  background: #0f172a !important;
+}
+
+/* Dark mode for components */
+.dark .bg-white {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+.dark .text-gray-800,
+.dark .text-gray-900 {
+  color: #f1f5f9 !important;
+}
+
+.dark .text-gray-600 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-gray-500,
+.dark .text-gray-400 {
+  color: #94a3b8 !important;
+}
+
+.dark .border-gray-100,
+.dark .border-gray-200 {
+  border-color: #334155 !important;
+}
+
+.dark .shadow-sm {
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Dark mode for cards */
+.dark .card-shine {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+}
+
+.dark .card-shine:hover {
+  background: #334155 !important;
+  border-color: #475569 !important;
+}
+
+/* Dark mode for newsletter */
+.dark .relative[style*="gradient"] {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%) !important;
+}
+
+.dark .relative[style*="gradient"] h2,
+.dark .relative[style*="gradient"] p {
+  color: #f1f5f9 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark input[type="email"].text-white {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: #475569 !important;
+  color: #f1f5f9 !important;
+}
+
+.dark input[type="email"].text-white::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Dark mode animations */
+@keyframes moonRise {
+  0% { transform: rotate(0deg) scale(0.8); opacity: 0; }
+  50% { transform: rotate(180deg) scale(1.1); opacity: 1; }
+  100% { transform: rotate(360deg) scale(1); opacity: 1; }
+}
+
+@keyframes sunSet {
+  0% { transform: rotate(0deg) scale(1); opacity: 1; }
+  50% { transform: rotate(-180deg) scale(1.1); opacity: 1; }
+  100% { transform: rotate(-360deg) scale(0.8); opacity: 0; }
+}
+
+@keyframes sparkle {
+  0%, 100% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+}
+
+.dark .animate-spin {
+  animation: moonRise 1s ease-in-out;
+}
+
+:not(.dark) .animate-spin {
+  animation: sunSet 1s ease-in-out;
+}
+
+/* Dark mode transitions */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
 /* Newsletter specific fixes - change to black text */
 .relative.text-center.text-white .bg-white\/15 {
   color: black !important;
