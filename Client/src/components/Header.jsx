@@ -1,7 +1,26 @@
-import React from 'react'
+﻿import React from 'react'
 import {assets} from '../assets/assets'
+import { set } from 'mongoose';
 
 const Header = () => {
+
+
+
+  const {setInput,input}=useAppContext()//it will get setInput and input from context and use it in this component to store input data in state and provide it to all components of frontend
+  const inputRef=useRef(null);//it will create a reference to input element and use it to focus on input element when component is mounted
+
+
+  const onSubmitHandler=(e)=>{
+    e.preventDefault();//it will prevent default behavior of form submission and use it to handle form submission in our own way
+    setInput(inputRef.current.value);//it will set input data in state and provide it to all components of frontend
+
+  }
+
+  const onClear=()=>{
+     setInput('');//it will clear input data in state and provide it to all components of frontend
+     inputRef.current.value='';//it will clear input value in input element
+  }
+
   return (
     <div className='mx-8 sm:mx-16 xl:mx-24 relative'>
       <div className='text-center mt-20 mb-8'>
@@ -16,14 +35,21 @@ const Header = () => {
             or thousand words. It's your platform, so write freely and express yourself without limits.
         </p>
 
-        <form className='flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-300 bg-white rounded overflow-hidden'>
-            <input type="text" placeholder='Search for blogs' className='w-full pl-4 outline-none' required />
+        <form onSubmit={onSubmitHandler} className='flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-300 bg-white rounded overflow-hidden'>
+            <input ref={inputRef} type="text" placeholder='Search for blogs' className='w-full pl-4 outline-none' required />
             <button type='submit' className='bg-primary text-white px-8 py-2 m-1.5 rounded hover:scale-105 transition-all cursor-pointer'>Search</button>
         </form>
 
 
       </div>
-      <img src={assets.gradientBackground} alt="gradient" className='absolute -top-50 -z-1
+      <div className='text-center'>
+       {input && 
+          <button className='border font-light text-xs py-1 px-3 rounded-sm shadow-custom-sm cursor-pointer' onClick={() => setInput('')}>
+            Clear Search
+          </button>
+        }
+      </div>
+      <img src={assets.gradientBackground} alt="gradient" className='absolute -top-52 -z-10
       opacity-50' />
     </div>
   )

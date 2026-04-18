@@ -1,14 +1,22 @@
-import React from 'react'
+﻿import React from 'react'
 import CommentTableItem from '../../components/CommentTableItem';
 import { useState, useEffect } from 'react';
 import { comment_data } from '../../data/comment_data';
+import { useAppContext } from '../../context/AppContext';
 
 const Comments = () => {
 const [comments, setComments] = useState([]);
 const [filter, setFilter] = useState('All');
 
+const {axios}=useAppContext()//it will get axios from context and use it to make api calls to backend and get data from server and store it in state and provide it to all components of frontend
+
 const fetchComments = async () => {
-setComments(comment_data);
+try {
+  const {data}=await axios.get('/api/admin/comments')//it will make api call to backend and get data from server and store it in data
+data.success ? setComments(data.comments) : toast.error(data.message)//if success it will store comments in state and provide it to all components of frontend otherwise it will show error message}
+} catch (error) {
+  toast.error(error.message)//if there is error it will show error message;
+}
 };
 
 useEffect(() => {
@@ -17,8 +25,8 @@ fetchComments();
 
 
   return (
-<div className='flex-1 pt-5 px-5 sm: pt-12 sm: pl-16 bg-blue-50/50'>
-<div className='flex justify-between items-center max-w-3x1'>
+<div className='flex-1 pt-5 px-5 sm:pt-12 sm:pl-16 bg-blue-50/50'>
+<div className='flex justify-between items-center max-w-3xl'>
 <h1>Comments</h1>
 <div className='flex gap-4'>
 <button onClick={() => setFilter('Approved') } className={`shadow-custom-sm border rounded-full px-4 py-1 cursor-pointer text-xs
@@ -29,7 +37,7 @@ ${filter === 'Not Approved' ? 'text-primary': 'text-gray-700' } `}>Not Approved<
 </div>
 </div>
 
-<div className='relative h-4/5 max-3xl overflow-x-auto mt-4 bg-white shadow rounded-lg scrollbar-hide'>
+<div className='relative h-4/5 max-w-3xl overflow-x-auto mt-4 bg-white shadow rounded-lg scrollbar-hide'>
 <table className='w-full text-sm text-gray-500 '>
   <thead className='w-full text-sm text-gray-700 text-left uppercase'>
     <tr>

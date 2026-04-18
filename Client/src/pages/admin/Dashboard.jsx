@@ -1,5 +1,7 @@
-import React, { use, useEffect, useState } from 'react'
+﻿import React, { use, useEffect, useState } from 'react'
 import { assets, dashboard_data } from '../../assets/assets'
+import toast from 'react-hot-toast'
+import { useAppContext } from '../../context/AppContext'
 const Dashboard = () => {
 const [dashboardData, setDashboardData] = useState({
 blogs: 0,
@@ -7,9 +9,23 @@ comments: 0,
 drafts: 0,
 recentBlogs: [ ]
 })
+
+const {axios}= useAppContext()
+
 const fetchDashboard = async ()=>{
-setDashboardData(dashboard_data)
+try {
+
+  const {data}=await axios.get('/api/admin/dashboard')//it will make api call to backend and get data from server and store it in data
+data.success ? setDashboardData(data.dashboardData) : toast.error(data.message)//if success it will store dashboard data in state and provide it to all components of frontend otherwise it will show error message}
+
+
+} catch (error) {
+
+  toast.error(error.message)//if there is error it will show error message;
+  
+}
 } 
+
 
 useEffect(()=>{
 fetchDashboard()
@@ -19,7 +35,7 @@ return (
 <div className='flex-1 p-4 md:p-10 bg-blue-50/50'>
 <div className='flex flex-wrap gap-4'>
 <div className='flex items-center gap-4 bg-white p-4 min-w-58 rounded
-shadow cursor-pointer hover: scale-105 transition-all' >
+shadow cursor-pointer hover:scale-105 transition-all' >
 <img src={assets.dashboard_icon_1} alt="" />
 <div>
 <p className='text-xl font-semibold text-gray-600'>
@@ -29,7 +45,7 @@ shadow cursor-pointer hover: scale-105 transition-all' >
 </div>
 
 <div className='flex items-center gap-4 bg-white p-4 min-w-58 rounded
-shadow cursor-pointer hover: scale-105 transition-all' >
+shadow cursor-pointer hover:scale-105 transition-all' >
 <img src={assets.dashboard_icon_2} alt="" />
 <div>
 <p className='text-xl font-semibold text-gray-600'>
@@ -40,7 +56,7 @@ shadow cursor-pointer hover: scale-105 transition-all' >
 
 
 <div className='flex items-center gap-4 bg-white p-4 min-w-58 rounded
-shadow cursor-pointer hover: scale-105 transition-all' >
+shadow cursor-pointer hover:scale-105 transition-all' >
 <img src={assets.dashboard_icon_3} alt="" />
 <div>
 <p className='text-xl font-semibold text-gray-600'>

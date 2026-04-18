@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react'
+﻿import React, { use, useEffect, useState } from 'react'
 import {useParams} from 'react-router-dom'
 import { assets, blog_data, comments_data } from '../assets/assets'
 import Moment from 'moment'
@@ -77,18 +77,18 @@ const Blog = () => {
     <>
     <div className='relative'>
 
-      <img src={assets.gradientBackground} alt="Gradient Background" className='absolute -top-50 -z-1 opacity-50'/>
+      <img src={assets.gradientBackground} alt="Gradient Background" className='absolute -top-52 -z-10 opacity-50'/>
 
        <Navbar/>
       <div className='text-center mt-20 text-gray-600'> 
         <p className='text-primary py-4 font-medium'>Published on {Moment(data.createdAt).format('MMMM Do YYYY')}</p>
-        <h1 className='text-2xl sm:text-5xl font-semibold max-2-2xl mx-auto text-gray-800'>{data.title}</h1>
+        <h1 className='text-2xl sm:text-5xl font-semibold max-w-2xl mx-auto text-gray-800'>{data.title}</h1>
         <h2>{data.subtitle}</h2>
         <p className='inline-block py-1 px-4 rounded-full mb-6 border text-sm
         border-primary/35 bg-primary/5 font-medium text-primary'>Michael Brown</p>
       </div>
 
-      <div className='mx-5 max-2-5xl md:mx-auto my-10-mt-6'>
+      <div className='mx-5 max-w-5xl md:mx-auto mt-6'>
         <img src={data.image} className='rounded-3xl mb-5'/>
 
         <div className='rich-text max-w-3xl mx-auto' dangerouslySetInnerHTML={{__html:data.description}}></div>
@@ -97,10 +97,10 @@ const Blog = () => {
       <div className='mt-14 mb-10 max-w-3xl mx-auto'>
 
         <p className='font-semibold mb-4'>Comments {comments.length}</p>
-        <div className='flex flex-xol gap-4'> 
+        <div className='flex flex-col gap-4'> 
           
           {comments.map((item,index)=>(
-            <div key={index} className='relative bg-primary/2 border
+            <div key={index} className='relative bg-primary/20 border
             border-primary/5 max-w-xl p-4 rounded text-gray-600'>
              <div className='flex items-center gap-2 mb-2'>
               <img src={assets.user_icon} className='w-6'/> 

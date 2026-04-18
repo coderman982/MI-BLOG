@@ -1,4 +1,4 @@
-import React from 'react'
+﻿import React from 'react'
 import BlogTableItem from '../../components/BlogTableItem';
 import { useState, useEffect } from 'react';
 import { blog_data } from '../../data/blog_data';
@@ -30,7 +30,7 @@ fetchBlogs()
 },[])
 
   return (
-    <div className='flex-1 pt-5px-5 sm:pt-12 sm:pl-16 bg-blue-50/50'>
+    <div className='flex-1 pt-5 px-5 sm:pt-12 sm:pl-16 bg-blue-50/50'>
       <h1>All Blogs</h1>
 
       <div className='relative h-4/5 mt-4  max-w-4xl overflow-x-auto shadow rounded-lg

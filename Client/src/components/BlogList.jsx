@@ -1,11 +1,22 @@
-import React, { useState } from 'react'
+﻿import React, { useState } from 'react'
 import { blog_data, blogCategories } from '../assets/assets'
 import { motion } from 'framer-motion'
 import BlogCard from './BlogCard'
+import { useAppContext } from '../context/AppContext'
 
 const BlogList = () => {
 
     const[menu,setMenu]=useState('All')
+    const[blogs,input]=useAppContext()//it will get blogs and setBlogs from context and use it in this component to display blogs and set blogs in state when we get data from server
+
+    const filteredBlogs=()=>{
+        if(input===''){
+            return blogs;
+        }
+
+        return blogs.filter((blog)=>blog.title.toLowerCase().includes(input.toLowerCase()))||
+        blog.category.toLowerCase().includes(input.toLowerCase())//it will filter blogs based on input and return filtered blogs
+    }
 
 
 
@@ -19,7 +30,7 @@ const BlogList = () => {
                   className={`cursor-pointer text-gray-500 ${menu === item && 'text-white px-4 pt-0.5' }`}>
                     {item}
                     {menu===item && (
-                        <motion.div className='absolute left-0 right-0 top-0 h-7 -z-1 bg-primary rounded-full' layoutId="underline" transition={{type:'spring',stiffness:500,damping:30}}></motion.div>
+                        <motion.div className='absolute left-0 right-0 top-0 h-7 -z-10 bg-primary rounded-full' layoutId="underline" transition={{type:'spring',stiffness:500,damping:30}}></motion.div>
                     )}
                 </button>
             </div>
@@ -27,7 +38,7 @@ const BlogList = () => {
         </div>
         <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4
         gap-8 mb-24 mx-8 sm:mx-16 xl:mx-40' >
-            {blog_data.filter((blog) => menu === 'All' ? true : blog.category === menu)
+            {filteredBlogs().filter((blog) => menu === 'All' ? true : blog.category === menu)
         .map((blog) => (
             <BlogCard key={blog._id} blog={blog} />
         ))}</div>
@@ -46,7 +57,7 @@ export default BlogList
 //if menu === item is true, then also add text-white px-4 pt-0.5
 //if false, nothing extra is added
 //So the clicked button becomes white text and a little extra padding.{menu===item && (
- // <div className='absolute left-0 right-0 top-0 h-7 -z-1 bg-primary rounded-full'></div>
+ // <div className='absolute left-0 right-0 top-0 h-7 -z-10 bg-primary rounded-full'></div>
 //This means:only show that extra colored background when this button is selected
 //In one line
 //It’s just:render buttons click button → change state
