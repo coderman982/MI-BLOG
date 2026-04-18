@@ -27,8 +27,8 @@ const NewsLetter = () => {
           Join 1,000+ readers
         </div>
 
-        <h2 className='text-3xl sm:text-4xl font-bold mb-3'>Never miss a story</h2>
-        <p className='text-white/70 text-sm sm:text-base mb-8 max-w-md mx-auto'>
+        <h2 className='text-3xl sm:text-4xl font-bold mb-3 text-white drop-shadow-sm'>Never miss a story</h2>
+        <p className='text-white/80 text-sm sm:text-base mb-8 max-w-md mx-auto drop-shadow-sm'>
           Get the best articles delivered straight to your inbox. No spam, ever.
         </p>
 
@@ -40,14 +40,14 @@ const NewsLetter = () => {
             <span className='font-medium'>You're subscribed! 🎉</span>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className='flex items-center gap-2 max-w-md mx-auto bg-white/15 border border-white/25 rounded-2xl p-2 backdrop-blur-sm'>
+          <form onSubmit={handleSubmit} className='flex items-center gap-2 max-w-md mx-auto bg-white/25 border border-white/35 rounded-2xl p-2 backdrop-blur-sm'>
             <input
               type='email'
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder='Enter your email address'
               required
-              className='flex-1 bg-transparent outline-none text-white placeholder-white/50 text-sm px-3 py-2'
+              className='flex-1 bg-white/10 outline-none text-white placeholder-white/80 text-sm px-3 py-2 rounded-lg'
             />
             <button
               type='submit'

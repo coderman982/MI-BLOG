@@ -93,3 +93,55 @@ body {
 .rich-text li { margin: 0.4rem 0; line-height: 1.7; }
 .rich-text strong { color: #1a1a2e; }
 .rich-text blockquote { border-left: 4px solid #5044E5; padding-left: 1rem; color: #6b6b8a; font-style: italic; margin: 1rem 0; }
+
+/* Simple text visibility fixes */
+.text-gray-400 { color: #6b7280 !important; }
+.text-gray-500 { color: #6b7280 !important; }
+
+/* Newsletter specific fixes - change to black text */
+.relative.text-center.text-white .bg-white\/15 {
+  color: black !important;
+}
+
+.relative.text-center.text-white h2 {
+  color: black !important;
+  margin-bottom: 1rem !important;
+}
+
+.relative.text-center.text-white p {
+  color: black !important;
+  margin-bottom: 2rem !important;
+  max-width: 400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Newsletter input and button fixes - black text */
+input[type="email"].text-white {
+  color: black !important;
+  background: white !important;
+  border: 1px solid #e5e7eb !important;
+  font-size: 0.95rem !important;
+  padding: 0.75rem 1rem !important;
+}
+
+input[type="email"].text-white::placeholder {
+  color: #6b7280 !important;
+  font-size: 0.95rem !important;
+}
+
+button.text-white {
+  background: #5044E5 !important;
+  color: white !important;
+  font-weight: 600 !important;
+  font-size: 0.95rem !important;
+  padding: 0.75rem 1.5rem !important;
+  border-radius: 0.75rem !important;
+  transition: all 0.3s ease !important;
+}
+
+button.text-white:hover {
+  background: #3d33cc !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 12px rgba(80, 68, 229, 0.3) !important;
+}

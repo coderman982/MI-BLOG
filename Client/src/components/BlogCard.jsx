@@ -36,15 +36,15 @@ const BlogCard = ({ blog }) => {
 
       {/* Content */}
       <div className='p-5'>
-        <h5 className='font-semibold text-gray-800 text-base leading-snug mb-2 group-hover:text-primary transition-colors duration-200 line-clamp-2'>
+        <h5 className='font-semibold text-gray-900 text-base leading-snug mb-2 group-hover:text-primary transition-colors duration-200 line-clamp-2'>
           {title}
         </h5>
         <p
-          className='text-xs text-gray-400 leading-relaxed line-clamp-2 mb-4'
+          className='text-sm text-gray-600 leading-relaxed line-clamp-2 mb-4'
           dangerouslySetInnerHTML={{ __html: description.slice(0, 100) }}
         />
         <div className='flex items-center justify-between'>
-          <span className='text-xs text-gray-400'>
+          <span className='text-sm text-gray-600'>
             {Moment(createdAt).format('MMM D, YYYY')}
           </span>
           <span className='flex items-center gap-1 text-xs text-primary font-medium group-hover:gap-2 transition-all duration-200'>

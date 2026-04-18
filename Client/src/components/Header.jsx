@@ -34,20 +34,20 @@ const Header = () => {
         </div>
 
         {/* Headline */}
-        <h1 className='text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6 text-gray-800'>
+        <h1 className='text-4xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6 text-gray-900'>
           Your own{' '}
           <span className='gradient-text'>blogging</span>
           <br />platform
         </h1>
 
-        <p className='max-w-xl mx-auto text-gray-500 text-base sm:text-lg leading-relaxed mb-10'>
+        <p className='max-w-xl mx-auto text-gray-700 text-base sm:text-lg leading-relaxed mb-10'>
           A space to think out loud — share what others might censor, write without filters.
           Whether one word or a thousand, this is your platform.
         </p>
 
         {/* Search Bar */}
         <form onSubmit={onSubmitHandler} className='relative flex items-center max-w-lg mx-auto shadow-xl shadow-primary/10 rounded-2xl overflow-hidden bg-white border border-gray-100'>
-          <div className='flex items-center pl-4 text-gray-400'>
+          <div className='flex items-center pl-4 text-gray-600'>
             <svg className='w-5 h-5' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
               <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z' />
             </svg>
@@ -72,7 +72,7 @@ const Header = () => {
           <div className='mt-4 animate-fade-in'>
             <button
               onClick={onClear}
-              className='inline-flex items-center gap-1.5 text-xs text-gray-500 border border-gray-200 bg-white px-3 py-1.5 rounded-full hover:border-primary/40 hover:text-primary transition-all cursor-pointer shadow-sm'
+              className='inline-flex items-center gap-1.5 text-xs text-gray-700 border border-gray-200 bg-white px-3 py-1.5 rounded-full hover:border-primary/40 hover:text-primary transition-all cursor-pointer shadow-sm'
             >
               <svg className='w-3 h-3' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                 <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
@@ -83,7 +83,7 @@ const Header = () => {
         )}
 
         {/* Stats row */}
-        <div className='flex items-center justify-center gap-8 mt-12 text-sm text-gray-400'>
+        <div className='flex items-center justify-center gap-8 mt-12 text-sm text-gray-600'>
           <div className='flex flex-col items-center'>
             <span className='text-2xl font-bold text-gray-700'>10+</span>
             <span>Articles</span>
@@ -102,7 +102,7 @@ const Header = () => {
       </div>
 
       {/* Scroll indicator */}
-      <div className='absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-gray-400 text-xs'>
+      <div className='absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-gray-600 text-xs'>
         <span>Scroll</span>
         <div className='w-px h-8 bg-gradient-to-b from-gray-400 to-transparent animate-pulse'></div>
       </div>

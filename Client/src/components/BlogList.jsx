@@ -31,10 +31,10 @@ const BlogList = () => {
 
       {/* Section header */}
       <div className='text-center mb-10'>
-        <h2 className='text-3xl sm:text-4xl font-bold text-gray-800 mb-2'>
+        <h2 className='text-3xl sm:text-4xl font-bold text-gray-900 mb-2'>
           Latest <span className='gradient-text'>Articles</span>
         </h2>
-        <p className='text-gray-400 text-sm'>Explore stories, ideas, and insights</p>
+        <p className='text-gray-600 text-sm'>Explore stories, ideas, and insights</p>
       </div>
 
       {/* Category pills — motion.span stays outside the button, no layoutId conflict */}
@@ -68,7 +68,7 @@ const BlogList = () => {
 
       {/* Blog grid */}
       {filtered.length === 0 ? (
-        <div className='text-center py-20 text-gray-400'>
+        <div className='text-center py-20 text-gray-600'>
           <svg className='w-16 h-16 mx-auto mb-4 opacity-30' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
             <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={1} d='M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z' />
           </svg>

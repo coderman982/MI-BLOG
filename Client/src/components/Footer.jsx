@@ -6,7 +6,7 @@ const Footer = () => {
   const navigate = useNavigate()
 
   return (
-    <footer className='bg-gray-950 text-gray-400'>
+    <footer className='bg-gray-950 text-gray-600'>
 
       <div className='px-8 sm:px-16 xl:px-28 pt-16 pb-10'>
         <div className='flex flex-col md:flex-row gap-12 justify-between mb-12'>
@@ -14,7 +14,7 @@ const Footer = () => {
           {/* Brand */}
           <div className='max-w-xs'>
             <img src={assets.logo} alt='logo' className='w-32 sm:w-40 mb-4 opacity-80' />
-            <p className='text-sm leading-relaxed text-gray-500'>
+            <p className='text-sm leading-relaxed text-gray-600'>
               Your creative space — write freely, share boldly, connect deeply.
             </p>
             <div className='flex gap-4 mt-6'>
@@ -38,7 +38,7 @@ const Footer = () => {
                 <ul className='space-y-2.5'>
                   {section.links.map((link, i) => (
                     <li key={i}>
-                      <a href='#' className='text-sm text-gray-500 hover:text-primary transition-colors duration-200'>
+                      <a href='#' className='text-sm text-gray-600 hover:text-primary transition-colors duration-200'>
                         {link}
                       </a>
                     </li>
@@ -56,8 +56,8 @@ const Footer = () => {
         <div className='flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-600'>
           <p>© 2025 ContentCook. All rights reserved.</p>
           <div className='flex gap-6'>
-            <a href='#' className='hover:text-gray-400 transition-colors'>Privacy Policy</a>
-            <a href='#' className='hover:text-gray-400 transition-colors'>Terms of Service</a>
+            <a href='#' className='hover:text-gray-600 transition-colors'>Privacy Policy</a>
+            <a href='#' className='hover:text-gray-600 transition-colors'>Terms of Service</a>
           </div>
         </div>
       </div>
