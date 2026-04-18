@@ -2,14 +2,20 @@ import React, { use } from 'react'
 import { assets } from '../../assets/assets'
 import { Outlet } from 'react-router-dom'
 import Sidebar from '../../components/Sidebar'
+import { useAppContext } from '../../context/AppContext'
 
 const Layout = () => {
 
 
-    const navigate=useNavigate()
+
+    const {axios, setToken,navigate}=useAppContext()//it will get axios from context and use it to make api calls to backend and get data from server and store it in state and provide it to all components of frontend
 
     const logout=()=>{
-        navigate('/')
+
+      localStorage.removeItem("token")//it will remove token from local storage
+      axios.defaults.headers.common['Authorization']=null;//it will remove token from header of all api calls and provide it to all components of frontend
+      setToken(null);//it will set token in state to null and provide it to all components of frontend    
+      navigate('/')
     }
 
   return (

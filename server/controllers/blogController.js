@@ -1,8 +1,9 @@
 import fs from 'fs'
-import imagekit from '../config/imagekit';
+import imagekit from '../config/imagekit.js';
 import { format } from 'path';
-import Blog from '../models/Blog';
-import Comment from '../models/Comment';
+import Blog from '../models/Blog.js';
+import Comment from '../models/Comment.js';
+import main from '../config/Gemini.js';
 
 
 
@@ -164,6 +165,17 @@ export const getAllBlogs=async(req,res)=>{
             const {blogId}=req.body;
             const comments=await Comment.find({blog:blogId,isApproved:true}).sort({createdAt:-1});
             res.json({success:true,comments})
+        } catch (error) {
+            res.json({success:false,message:error.message})
+        }
+    }
+
+
+    export const generateContent=async(req,res)=>{
+        try {
+            const {prompt}=req.body;
+            const content=await main(prompt + "Generate a blog post with this title in simple format with heading and subheading and also add some relevant emojis in the content");
+            res.json({success:true,content})
         } catch (error) {
             res.json({success:false,message:error.message})
         }

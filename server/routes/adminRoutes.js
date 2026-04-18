@@ -7,7 +7,7 @@ import auth from "../middleware/auth.js";
 import { get } from "mongoose";
 import { approveCommentById, deleteCommentById, getAllBlogsAdmin, getDashboard, gettAllComments } from "../controllers/adminController.js";
 
-const adminRouter=express.Router;
+const adminRouter=express.Router();
 
 adminRouter.post("/login",adminLogin);// whenever we hit /login endpoint it execute adminlogin.js file
 adminRouter.get("/comments",auth,gettAllComments);

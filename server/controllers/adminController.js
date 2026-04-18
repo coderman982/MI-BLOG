@@ -1,8 +1,8 @@
 
 import jwt from 'jsonwebtoken'
-import Blog from '../models/Blog';
+import Blog from '../models/Blog.js';
 import { create } from 'motion/react-m';
-import Comment from '../models/Comment';
+import Comment from '../models/Comment.js';
 
 const adminLogin = async(req,res) => {
 
