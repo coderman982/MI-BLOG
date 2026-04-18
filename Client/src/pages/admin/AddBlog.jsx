@@ -7,7 +7,8 @@ import toast from 'react-hot-toast'
 
 const AddBlog = () => {
   const{axios}=useAppContext()//it will get axios from context and use it to make api calls to backend and get data from server and store it in state and provide it to all components of frontend
-  const [isAdding, setIsAdding] = useState(true);
+  const [isAdding, setIsAdding] = useState(false);
+  const [loading, setLoading] = useState(false);
 
 
 
@@ -20,7 +21,21 @@ const AddBlog = () => {
   const [category, setCategory] = useState('Startup');
   const [isPublished, setIsPublished] = useState(false);
 
-  const generateWithAI=async()=>{}
+  const generateContent=async(e)=>{
+    if(!title) return toast.error("Please enter title to generate content")//if title is not entered it will show error message
+    try {
+
+      setLoading(true);
+      const {data}=await axios.post('/api/blog/generate',{prompt: title})//it will make api call to backend and send title as prompt to generate content and store the response in data
+
+      if(data.success){
+        quillRef.current.root.innerHTML=parse(data.content);//if success it will set the generated content in quill editor
+      }
+      
+    } catch (error) {
+      
+    }y
+  }
 
   const onSubmitHandler=async(e)=>{
     try {
