@@ -1,20 +1,95 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto+Flex:opsz,wght,XOPQ,XTRA,YOPQ,YTDE,YTFI,YTLC,YTUC@8..144,100..1000,96,468,79,-203,738,514,712&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Sora:wght@100..800&display=swap');
 
 @import "tailwindcss";
 
-*{
-    font-family: "Outfit", "sans-serif";
+@theme {
+  --color-primary: #5044E5;
+  --color-primary-dark: #3d33cc;
+  --font-sans: "Outfit", sans-serif;
 }
 
-::-webkit-scrollbar{/* The ::-webkit-scroller pseudo-element is a WebKit-specific CSS selector (used in browsers like Chrome and Safari) that targets the entire scrollbar of an element. It allows you to customize the 
-    scrollbar's appearance, such as its background color, width, or other visual properties*/
-    display: none;
+* {
+  font-family: "Outfit", sans-serif;
 }
 
-/* stylelint-disable-next-line at-rule-no-unknown */
+::-webkit-scrollbar { display: none; }
 
-@theme{
+/* Smooth page transitions */
+body {
+  background: #fafafa;
+}
 
-    --color-primary: #5044E5;
- }
- 
+/* Glassmorphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #5044E5 0%, #8b5cf6 50%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Shine effect on cards */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+.card-shine::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.6s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+.card-shine:hover::before {
+  left: 125%;
+}
+
+/* Animated gradient background */
+.animated-gradient {
+  background: linear-gradient(-45deg, #f0f0ff, #fdf4ff, #eff6ff, #f0f9ff);
+  background-size: 400% 400%;
+  animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Pulse glow */
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(80, 68, 229, 0.4); }
+  50% { box-shadow: 0 0 20px 6px rgba(80, 68, 229, 0.15); }
+}
+
+/* Rich text styles for blog content */
+.rich-text h1 { font-size: 2rem; font-weight: 700; margin: 1.5rem 0 1rem; color: #1a1a2e; }
+.rich-text h2 { font-size: 1.5rem; font-weight: 600; margin: 1.25rem 0 0.75rem; color: #2d2d44; }
+.rich-text h3 { font-size: 1.25rem; font-weight: 600; margin: 1rem 0 0.5rem; color: #2d2d44; }
+.rich-text p  { margin: 0.75rem 0; line-height: 1.85; color: #4a4a6a; }
+.rich-text ul, .rich-text ol { margin: 0.75rem 0 0.75rem 1.5rem; color: #4a4a6a; }
+.rich-text li { margin: 0.4rem 0; line-height: 1.7; }
+.rich-text strong { color: #1a1a2e; }
+.rich-text blockquote { border-left: 4px solid #5044E5; padding-left: 1rem; color: #6b6b8a; font-style: italic; margin: 1rem 0; }

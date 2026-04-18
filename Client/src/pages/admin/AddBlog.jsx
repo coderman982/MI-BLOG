@@ -1,9 +1,10 @@
-import React, { use } from 'react'
-import { useState } from 'react'
-import assets from '../../assets'
+import React from 'react'
+import { useState, useRef, useEffect } from 'react'
+import { assets, blogCategories } from '../../assets/assets'
+import { useAppContext } from '../../context/AppContext'
 import Quill from 'quill'
-import { blogCategories } from '../../assets/assets'
 import toast from 'react-hot-toast'
+import { parse } from 'marked'
 
 const AddBlog = () => {
   const{axios}=useAppContext()//it will get axios from context and use it to make api calls to backend and get data from server and store it in state and provide it to all components of frontend
@@ -33,8 +34,14 @@ const AddBlog = () => {
       }
       
     } catch (error) {
+
+      toast.error(error.message)//if there is error it will show error message
       
-    }y
+    }
+
+    finally{
+      setLoading(false);
+    }
   }
 
   const onSubmitHandler=async(e)=>{
@@ -87,14 +94,12 @@ const AddBlog = () => {
 
 
   return (
-   <form className='flex-1 bg-blue-50/50 text-gray-600 h-full overflow-scroll'>
+   <form  onSubmit={onSubmitHandler} className='flex-1 bg-blue-50/50 text-gray-600 h-full overflow-scroll'>
     <div className='bg-white w-full max-w-3xl p-4 md:p-10 sm:m-10 shadow rounded'>
         <p>Upload Thumbnail</p>
         <label htmlFor='image'>
-          <img src={!image ? assets.upload_area : URL.createObjectURL(image)} alt='Thumbnail' className='mt-2 h-16 rounded
-          cursor-pointer'/>
-          <input onChange={(e)=>setImage(e.target.files[0])}></input>
-          <input type='file' id='image' hidden required/>
+          <img src={!image ? assets.upload_area : URL.createObjectURL(image)} alt='Thumbnail' className='mt-2 h-16 rounded cursor-pointer'/>
+          <input type='file' id='image' hidden accept='image/*' onChange={(e) => setImage(e.target.files[0])} required/>
         </label>
 
         <p className='mt-4'>Blog Title</p>
@@ -108,7 +113,12 @@ const AddBlog = () => {
         <p className='mt-4'>Blog Description</p>
         <div className='max-w-lg h-74 pb-16 sm:pb-10 pt-2 relative'>
           <div ref={editorRef}></div>
-          <button type='button' onClick={generateWithAI} className='absolute bottom-1
+          {loading && ( <div className='absolute right-0 top-0 bottom-0 left-0 flex items-center justify-center justify-center bg-black/10 mt-2' >
+
+          <div className='w-8 h-8 rounded-full border-2 border-t-white animate-spin'></div>
+          
+          </div>)}
+          <button disabled={loading} type='button' onClick={generateContent} className='absolute bottom-1
           right-2 ml-2 text-xs text-white bg-black/70 px-4 py-1.5 rounded hover:underline cursor-pointer'>Generate with AI</button>
         </div>
 

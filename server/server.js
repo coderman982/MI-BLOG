@@ -11,7 +11,7 @@ const app=express();
 await connectDB() //it await connectDb to complete
 
 //middlewares
-app.use(cors())//it will connect backend to frontend
+app.use(cors({origin:'*'}))//allow all origins for dev
 app.use(express.json())//all requests will be parsed in json method
 
 //routes

@@ -1,7 +1,9 @@
-﻿import React from 'react'
-import BlogTableItem from '../../components/BlogTableItem';
+import React from 'react'
+import BlogTableItem from '../../components/admin/BlogTableItem';
 import { useState, useEffect } from 'react';
-import { blog_data } from '../../data/blog_data';
+import { useAppContext } from '../../context/AppContext';
+import toast from 'react-hot-toast';
+import { blog_data } from '../../assets/assets';
 
 const ListBlog = () => {
 
@@ -21,12 +23,11 @@ const fetchBlogs = async () => {
       toast.error(data.message)//if failed it will show error message
     }
   } catch (error) {
-    toast.error(error.message)//if there is error it will show error message
+    toast.error(error.message)
   }
-setBlogs (blog_data)
 }
-useEffect ((D)=>{
-fetchBlogs()
+useEffect(()=>{
+  fetchBlogs()
 },[])
 
   return (

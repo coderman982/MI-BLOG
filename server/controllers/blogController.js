@@ -94,18 +94,15 @@ export const getAllBlogs=async(req,res)=>{
 
     export const getBlogById=async(req,res)=>{
         try {
-            const {blogId}=req.params;//to get blog id from url parameter we use params
-            const blog=await Blog.findById()
+            const {blogId}=req.params;
+            const blog=await Blog.findById(blogId)
             if(!blog){
-                return res.json({success:false,message:"bolg not found"})
+                return res.json({success:false,message:"blog not found"})
             }
-            
+            res.json({success:true,blog})
         } catch (error) {
-
             res.json({success:false,message:error.message})
-            
         }
-
     }
     
     //to find and delte blog
@@ -162,7 +159,7 @@ export const getAllBlogs=async(req,res)=>{
 
     export const getBlogComments=async(req,res)=>{
         try {
-            const {blogId}=req.body;
+            const blogId = req.query.blogId || req.body.blogId;
             const comments=await Comment.find({blog:blogId,isApproved:true}).sort({createdAt:-1});
             res.json({success:true,comments})
         } catch (error) {

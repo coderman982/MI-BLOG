@@ -1,7 +1,7 @@
 
 import jwt from 'jsonwebtoken'
 import Blog from '../models/Blog.js';
-import { create } from 'motion/react-m';
+
 import Comment from '../models/Comment.js';
 
 const adminLogin = async(req,res) => {
@@ -63,7 +63,7 @@ export const getDashboard=async(req,res)=>{
 
 
 
-        res.json({success:true,recentBlogs})
+        res.json({success:true,...dashboardData})
     } catch (error) {
         res.json({success:false,message:error.message}) 
     }

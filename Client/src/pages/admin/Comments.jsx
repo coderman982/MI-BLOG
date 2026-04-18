@@ -1,7 +1,6 @@
 ﻿import React from 'react'
-import CommentTableItem from '../../components/CommentTableItem';
+import CommentTableItem from '../../components/admin/CommentTableItem';
 import { useState, useEffect } from 'react';
-import { comment_data } from '../../data/comment_data';
 import { useAppContext } from '../../context/AppContext';
 
 const Comments = () => {
@@ -50,7 +49,7 @@ ${filter === 'Not Approved' ? 'text-primary': 'text-gray-700' } `}>Not Approved<
     </tr>
   </thead>
   <tbody>
-    {Comments.filter((comment)=>{if(filter === 'Approved') return comment.isApproved === true;
+    {comments.filter((comment)=>{if(filter === 'Approved') return comment.isApproved === true;
       return comment.isApproved === false
     }).map((comment,index) => (
       <CommentTableItem key={comment._id} comment={comment} index={index+1} fetchComments={fetchComments} />

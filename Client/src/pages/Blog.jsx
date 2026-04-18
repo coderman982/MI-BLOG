@@ -1,77 +1,65 @@
-﻿import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {useParams} from 'react-router-dom'
-import { assets, blog_data, comments_data } from '../assets/assets'
+import { assets, blog_data } from '../assets/assets'
 import Moment from 'moment'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import Loader from '../components/Loader'
 import toast from 'react-hot-toast'
-import { set } from 'mongoose'
+import { useAppContext } from '../context/AppContext'
 
 const Blog = () => {
   const {id} = useParams()
 
-  const{axios}=useAppContext()//it will get axios from context and use it to make api calls to backend and get data from server and store it in state and provide it to all components of frontend  
+  const {axios} = useAppContext()
 
-  const [data,setData]=useState(null)
-  const [comments,setComments]=useState([])
+  const [data, setData] = useState(null)
+  const [comments, setComments] = useState([])
+  const [name, setName] = useState('')
+  const [content, setContent] = useState('')
 
-  const[name,setName]=useState(null)
-  const[content,setContent]=useState([])
-
-  const fetchBlogData= async()=>{
+  const fetchBlogData = async () => {
     try {
-      const {data}=await axios.get(`/api/blog/${id}`)//it will make api call to backend and get data from server and store it in data
-         data.success ? setData(data) : toast.error(data.message) //if success it will store data in state and provide it to all components of frontend otherwise it will show error message
-    } catch (error) {
-
-      toast.error(error.message)//if there is error it will show error message;
-      
-    }
-  }
-
-  const fetchComments= async()=>{
-
-    try {
-      const  {data}=await axios.get(`/api/blog/comments`,{blogId :id})//it will make api call to backend and get data from server and store it in data
+      const {data} = await axios.get(`/api/blog/${id}`)
       if(data.success){
-        setComments(data.comments)//if success it will store comments in state and provide it to all components of frontend
-      }
-      else{
-        toast.error(data.message)//if failed it will show error message
+        setData(data.blog)
       }
     } catch (error) {
-      toast.error(error.message)
+      // Backend offline — fall back to local blog_data
+      const local = blog_data.find(b => b._id === id)
+      if(local) setData(local)
     }
-
-
   }
 
-  const addComment=async(e)=>{
-    e.preventDefault();
-
+  const fetchComments = async () => {
     try {
-            const  {data}=await axios.get(`/api/blog/add-comment`,{blog :id,name,content})//it will make api call to backend and get data from server and store it in data
-            if(data.success){
-              toast.success(data.message)//if success it will show success message
-              setName('')//it will clear name input field after successful submission
-              setContent('')//it will clear content input field after successful submission
-            }
-
-            else{
-              toast.error(data.message)//if failed it will show error message
-            }
-
+      const {data} = await axios.get(`/api/blog/comments`, {params: {blogId: id}})
+      if(data.success) setComments(data.comments)
     } catch (error) {
-      toast.error(error.message)
+      // silently ignore when backend is offline
     }
   }
 
+  const addComment = async (e) => {
+    e.preventDefault()
+    try {
+      const {data} = await axios.post(`/api/blog/add-comment`, {blog: id, name, content})
+      if(data.success){
+        toast.success(data.message)
+        setName('')
+        setContent('')
+      } else {
+        toast.error(data.message)
+      }
+    } catch (error) {
+      toast.error('Could not submit comment. Is the server running?')
+    }
+  }
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchBlogData()
     fetchComments()
-  },[])
+  }, [id])
 
   return data ? (
     <>
@@ -83,61 +71,48 @@ const Blog = () => {
       <div className='text-center mt-20 text-gray-600'> 
         <p className='text-primary py-4 font-medium'>Published on {Moment(data.createdAt).format('MMMM Do YYYY')}</p>
         <h1 className='text-2xl sm:text-5xl font-semibold max-w-2xl mx-auto text-gray-800'>{data.title}</h1>
-        <h2>{data.subtitle}</h2>
+        <h2>{data.subTitle}</h2>
         <p className='inline-block py-1 px-4 rounded-full mb-6 border text-sm
         border-primary/35 bg-primary/5 font-medium text-primary'>Michael Brown</p>
       </div>
 
       <div className='mx-5 max-w-5xl md:mx-auto mt-6'>
-        <img src={data.image} className='rounded-3xl mb-5'/>
-
-        <div className='rich-text max-w-3xl mx-auto' dangerouslySetInnerHTML={{__html:data.description}}></div>
+        <img src={data.image} className='rounded-3xl mb-5 w-full'/>
+        <div className='rich-text max-w-3xl mx-auto' dangerouslySetInnerHTML={{__html: data.description}}></div>
       </div>
 
       <div className='mt-14 mb-10 max-w-3xl mx-auto'>
-
-        <p className='font-semibold mb-4'>Comments {comments.length}</p>
+        <p className='font-semibold mb-4'>Comments ({comments.length})</p>
         <div className='flex flex-col gap-4'> 
-          
-          {comments.map((item,index)=>(
-            <div key={index} className='relative bg-primary/20 border
-            border-primary/5 max-w-xl p-4 rounded text-gray-600'>
-             <div className='flex items-center gap-2 mb-2'>
-              <img src={assets.user_icon} className='w-6'/> 
-              <p className='font-medium'>{item.name}</p>
-              
+          {comments.map((item, index) => (
+            <div key={index} className='relative bg-primary/20 border border-primary/5 max-w-xl p-4 rounded text-gray-600'>
+              <div className='flex items-center gap-2 mb-2'>
+                <img src={assets.user_icon} className='w-6'/>
+                <p className='font-medium'>{item.name}</p>
               </div>
               <p className='text-sm max-w-md ml-8'>{item.content}</p>
               <div className='absolute right-4 bottom-3 flex items-center gap-2 text-xs'>{Moment(item.createdAt).fromNow()}</div>
-
             </div>
-          ))} </div>
-
-
+          ))}
+        </div>
       </div>
+
       <div className='max-w-3xl mx-auto'>
         <p className='font-semibold mb-4'>ADD YOUR COMMENT</p>
         <form onSubmit={addComment} className='flex flex-col items-start gap-4 max-w-lg'>
-          <input onChange={(e)=>setName(e.target.value)} value={name} type="text" placeholder='Your name' className='w-full p-2 border border-gray-300 rounded outline-none' required/>
-          <textarea  onChange={(e)=>setContent(e.target.value)} placeholder='Your comment' className='w-full p-2 border border-gray-300 rounded outline-none h-48' required></textarea>
-
-          <button type='submit' className='bg-primary text-white px-8 p-2 rounded hover:scale-102 transition-all cursor-pointer'>Submit</button>
+          <input onChange={(e) => setName(e.target.value)} value={name} type="text" placeholder='Your name' className='w-full p-2 border border-gray-300 rounded outline-none' required/>
+          <textarea onChange={(e) => setContent(e.target.value)} value={content} placeholder='Your comment' className='w-full p-2 border border-gray-300 rounded outline-none h-48' required></textarea>
+          <button type='submit' className='bg-primary text-white px-8 p-2 rounded hover:scale-105 transition-all cursor-pointer'>Submit</button>
         </form>
       </div>
 
-
        <div className='my-24 max-w-3xl mx-auto'>
-
-        <p className='font-semibold my-4'> Share this content to others</p>
-
-        <div className='flex'>
-
-          <img src={assets.facebook_icon} alt='facebook' width={50} className='w-6 cursor-pointer'/>
-          <img src={assets.twitter_icon} alt='twitter' width={50} className='w-6 cursor-pointer'/>
-          <img src={assets.googleplus_icon} alt='linkedin' width={50} className='w-6 cursor-pointer'/>
+        <p className='font-semibold my-4'>Share this content to others</p>
+        <div className='flex gap-3'>
+          <img src={assets.facebook_icon} alt='facebook' className='w-6 cursor-pointer'/>
+          <img src={assets.twitter_icon} alt='twitter' className='w-6 cursor-pointer'/>
+          <img src={assets.googleplus_icon} alt='google+' className='w-6 cursor-pointer'/>
         </div>
-
-
        </div>
 
     </div>

@@ -1,5 +1,5 @@
 import express from "express";
-import { addBlog, addComment, deleteBlogById, getAllBlogs, getBlogById, getBlogComments, tooglePublish } from "../controllers/blogController.js";
+import { addBlog, addComment, deleteBlogById, getAllBlogs, getBlogById, getBlogComments, tooglePublish, generateContent } from "../controllers/blogController.js";
 import upload from "../middleware/multer.js";
 import auth from "../middleware/auth.js";
 
@@ -12,7 +12,8 @@ blogRouter.post('/delete',deleteBlogById);
 blogRouter.post('/toggle-publish',auth,tooglePublish);
 
 blogRouter.post("/add-comment",addComment);
-blogRouter.post("/comments",getBlogComments);//it will get all comments of a blog by blog id which we will send from frontend in request body
+blogRouter.get("/comments",getBlogComments);
+blogRouter.post("/comments",getBlogComments);
 
 blogRouter.post("/generate",auth,generateContent);//it will generate content by using gemini api and send it to frontend now donnect it to front end in
 //  addblog.jsx file and make api call to this api and 

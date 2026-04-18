@@ -1,9 +1,7 @@
 //app context is used to share data between components without prop drilling
 
 import axios from "axios";
-import { useContext } from "react";
-import { useEffect } from "react";
-import { createContext } from "react";
+import { useContext, useEffect, useState, createContext } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
@@ -22,10 +20,12 @@ export const AppProvider=({children})=>{//it will wrap our application and provi
 
     const fetchBlogs=async()=>{//it will fetch blogs from server and store it in state and provide it to all components of frontend
         try {
-            const {data}=await axios.get('/api/blog/all');//it will make api call to backend and get data from server and store it in data
-            data.success? setBlogs(data.blogs):toast.error(data.message)//if success it will store blogs in state and provide it to all components of frontend otherwise it will show error message
+            const {data}=await axios.get('/api/blog/all');
+            if(data.success) setBlogs(data.blogs);
+            // If API fails, BlogList falls back to local blog_data silently
         } catch (error) {
-            toast.error(error.message)//if there is error it will show error message;
+            // Backend offline — no toast, local fallback data is used instead
+            console.log('Backend unavailable, using local data:', error.message);
         }
 
     }
